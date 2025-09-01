@@ -1,0 +1,11 @@
+# Data files
+data/
+*.csv
+*.xlsx
+
+# Python virtual environment
+venv/
+.env
+
+# Notebook checkpoints
+.ipynb_checkpoints/
