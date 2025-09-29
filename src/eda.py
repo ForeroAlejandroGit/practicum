@@ -140,3 +140,28 @@ class EDA:
         df = df.loc[:, 'LONGITUD KM':'15 - OTROS - MANEJO DE REDES']
         
         return df
+    
+    def show_plots_eda(self, predictor_name: str, target_name: str, hue_name: str, df_clean: pd.DataFrame) -> None:
+
+        plt.style.use('seaborn-v0_8-whitegrid')
+        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+        # Input distribution
+        sns.histplot(df_clean[predictor_name], kde=True, ax=axes[0,0], color='royalblue')
+        axes[0,0].set_title('Input Distribution', fontsize=14, weight='bold')
+
+        # Output distribution  
+        sns.histplot(df_clean[target_name], kde=True, ax=axes[0,1], color='crimson')
+        axes[0,1].set_title('Target Distribution', fontsize=14, weight='bold')
+
+        # Scatter by category
+        sns.scatterplot(data=df_clean, x=predictor_name, y=target_name, hue=hue_name, ax=axes[1,0], s=60, alpha=0.7)
+        axes[1,0].set_title(f'Relationship by {hue_name}', fontsize=14, weight='bold')
+
+        # Joint plot with regression
+        sns.regplot(data=df_clean, x=predictor_name, y=target_name, ax=axes[1,1], scatter_kws={'alpha':0.5}, line_kws={'color':'red'})
+        axes[1,1].set_title('Linear Trend', fontsize=14, weight='bold')
+
+        plt.suptitle('Data Analysis', fontsize=16, weight='bold')
+        plt.tight_layout()
+        plt.show()
